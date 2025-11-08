@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as geoip from 'geoip-lite';
-import { allowedCountries } from './common/allowed-ip';
+import { allowedCountries } from './common/allowed-countries';
 
 @Injectable()
 export class AppService {
