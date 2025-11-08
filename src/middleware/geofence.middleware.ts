@@ -32,7 +32,7 @@ export class GeofenceMiddleware implements NestMiddleware {
       const response = await this.ipinfo.lookupIp(ip);
       console.log('IPInfo response:', response);
 
-      const country = response.country;
+      const country = response.countryCode;
 
       if (!country || !allowedCountries.includes(country)) {
         throw new ForbiddenException(
@@ -42,6 +42,9 @@ export class GeofenceMiddleware implements NestMiddleware {
 
       next();
     } catch (err) {
+      if (err instanceof ForbiddenException) {
+        throw err;
+      }
       console.error('IPInfo lookup failed:', err);
       throw new ForbiddenException('Unable to verify location.');
     }
